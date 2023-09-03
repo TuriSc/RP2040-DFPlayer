@@ -12,7 +12,7 @@ This library supports the following operations:
 - set the equalizer to one of six built-in presets
 - set playback mode to single play, folder repeat, single repeat, or random
 - pause and resume playback
-- query player status and id of current track
+- query player status, id of current track, and total number of tracks available
 - send custom commands
 
 The device supports many more commands than this library implements, most of which can be invoked calling dfplayer_write(). For example, to put the device in standby mode you can use:
@@ -43,5 +43,5 @@ In the example, uart1 is used on GPIOs 8 and 9 on the Pico. Another pair of TX/R
 Two distinct DFPlayers can be used simultaneously using both uart0 and uart1.
 
 ### Version history
-- 2023.09.03 - v1.0.1 - Added query function
+- 2023.09.03 - v1.1.0 - Added query function
 - 2023.08.29 - v1.0.0 - First release

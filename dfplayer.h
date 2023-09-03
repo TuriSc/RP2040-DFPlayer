@@ -2,7 +2,7 @@
  * RP2040 DFPlayer
  * C library to control a DFPlayer mini (or clone) with Raspberry Pi Pico.
  * By Turi Scandurra – https://turiscandurra.com/circuits
- * v1.0.1 - 2023.09.03
+ * v1.1.0 - 2023.09.03
 */
 
 #ifndef INC_DFPLAYER_H_
@@ -26,6 +26,7 @@
 #define	CMD_PAUSE           0x0E
 #define	QUERY_STATUS        0x42
 #define	QUERY_SD_TRACK      0x4C
+#define QUERY_NUM_SD_TRACKS 0x47
 
 // Playback modes
 typedef enum {
@@ -52,6 +53,9 @@ typedef struct {
 int16_t calculate_checksum(uint8_t *buffer);
 void dfplayer_write(dfplayer_t *dfplayer, uint8_t cmd, uint16_t arg);
 bool dfplayer_query(dfplayer_t *dfplayer, uint8_t cmd, uint16_t param);
+uint8_t dfplayer_get_status(dfplayer_t *dfplayer);
+uint16_t dfplayer_get_track_id(dfplayer_t *dfplayer);
+uint16_t dfplayer_get_num_tracks(dfplayer_t *dfplayer);
 void dfplayer_init(dfplayer_t *dfplayer, uart_inst_t *uart, uint8_t gpio_tx, uint8_t gpio_rx);
 void dfplayer_next(dfplayer_t *dfplayer);
 void dfplayer_previous(dfplayer_t *dfplayer);
@@ -63,7 +67,5 @@ void dfplayer_set_eq(dfplayer_t *dfplayer, dfplayer_eq_t eq);
 void dfplayer_set_playback_mode(dfplayer_t *dfplayer, dfplayer_mode_t mode);
 void dfplayer_resume(dfplayer_t *dfplayer);
 void dfplayer_pause(dfplayer_t *dfplayer);
-uint8_t dfplayer_get_status(dfplayer_t *dfplayer);
-uint16_t dfplayer_get_track(dfplayer_t *dfplayer);
 
 #endif // INC_DFPLAYER_H_

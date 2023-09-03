@@ -2,7 +2,7 @@
  * RP2040 DFPlayer
  * C library to control a DFPlayer mini (or clone) with Raspberry Pi Pico.
  * By Turi Scandurra – https://turiscandurra.com/circuits
- * v1.0.1 - 2023.09.03
+ * v1.1.0 - 2023.09.03
 */
 
 #include "dfplayer.h"
@@ -10,6 +10,7 @@
 
 uint8_t dfplayer_status;
 uint16_t dfplayer_current_track;
+uint16_t dfplayer_num_tracks;
 
 uint8_t init_cmd_buf[10] = {
     0x7e, // start byte
@@ -60,6 +61,9 @@ bool dfplayer_query(dfplayer_t *dfplayer, uint8_t cmd, uint16_t param){
 		case QUERY_SD_TRACK:
 		    dfplayer_current_track = (buffer[5] << 8 | buffer[6]);
 		break;
+        case QUERY_NUM_SD_TRACKS:
+		    dfplayer_num_tracks = (buffer[5] << 8 | buffer[6]);
+		break;
     }
 
     return true;
@@ -71,10 +75,16 @@ uint8_t dfplayer_get_status(dfplayer_t *dfplayer){
     return dfplayer_status;
 }
 
-uint16_t dfplayer_get_track(dfplayer_t *dfplayer){
+uint16_t dfplayer_get_track_id(dfplayer_t *dfplayer){
     dfplayer_current_track = 0;
     dfplayer_query(dfplayer, QUERY_SD_TRACK, 0x0000);
     return dfplayer_current_track;
+}
+
+uint16_t dfplayer_get_num_tracks(dfplayer_t *dfplayer){
+    dfplayer_num_tracks = 0;
+    dfplayer_query(dfplayer, QUERY_NUM_SD_TRACKS, 0x0000);
+    return dfplayer_num_tracks;
 }
 
 void dfplayer_init(dfplayer_t *dfplayer, uart_inst_t *uart, uint8_t gpio_tx, uint8_t gpio_rx){
