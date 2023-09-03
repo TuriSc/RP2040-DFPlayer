@@ -1,8 +1,7 @@
 /*
- * RP2040 DFPlayer
- * C library to control a DFPlayer mini (or clone) with Raspberry Pi Pico.
+ * RP2040 DFPlayer example
+ * RP2040 DFPlayer is a C library to control a DFPlayer mini (or clone) with Raspberry Pi Pico.
  * By Turi Scandurra – https://turiscandurra.com/circuits
- * v1.0.0 - 2023.08.29
 */
 
 #include <stdio.h>
@@ -43,5 +42,11 @@ int main() {
 
         // Skip to next track
         dfplayer_next(&dfplayer);
+
+        sleep_ms(200);
+
+        // Get the current track id
+        uint16_t current_track = dfplayer_get_track(&dfplayer);
+        if(current_track > 0) { printf("Playing track: %d\n", current_track);}
     }
 }
