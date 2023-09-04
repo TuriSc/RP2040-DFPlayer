@@ -23,15 +23,20 @@ int main() {
 
     // Initialize the player
     dfplayer_init(&dfplayer, DFPLAYER_UART, GPIO_TX, GPIO_RX);
+    // Sleep 200ms between commands
+    sleep_ms(200);
 
     // Set the volume
     dfplayer_set_volume(&dfplayer, 30);
+    sleep_ms(200);
 
     // Apply an equalization preset
     dfplayer_set_eq(&dfplayer, EQ_BASS);
+    sleep_ms(200);
 
     // Change the playback mode
     dfplayer_set_playback_mode(&dfplayer, MODE_FOLDER_REPEAT);
+    sleep_ms(200);
 
     // Play the first track on the microSD
     dfplayer_play(&dfplayer, 1);
@@ -42,11 +47,10 @@ int main() {
 
         // Skip to next track
         dfplayer_next(&dfplayer);
-
         sleep_ms(200);
 
         // Get the current track id
-        uint16_t current_track = dfplayer_get_track(&dfplayer);
+        uint16_t current_track = dfplayer_get_track_id(&dfplayer);
         if(current_track > 0) { printf("Playing track: %d\n", current_track);}
     }
 }
