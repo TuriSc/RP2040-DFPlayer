@@ -48,7 +48,7 @@ void dfplayer_write(dfplayer_t *dfplayer, uint8_t cmd, uint16_t param){
 bool dfplayer_query(dfplayer_t *dfplayer, uint8_t cmd, uint16_t param){
     uint8_t buffer[10];
     dfplayer_write(dfplayer, cmd, param);
-    sleep_ms(200); // TODO make non-blocking
+    // TODO add non-blocking delay
     uart_read_blocking(dfplayer->uart, buffer, 10);
 	if(buffer[0] != init_cmd_buf[0]) return false;
 	if(buffer[2] != init_cmd_buf[2]) return false;

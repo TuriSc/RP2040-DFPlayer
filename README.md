@@ -1,6 +1,6 @@
 # RP2040 DFPlayer
 
-A small C library to control a DFPlayer mini (or clone) with Raspberry Pi Pico or another RP2040-based microcontroller.
+A small C library to control a DFPlayer mini (or a clone like MP3-TF-16P) with Raspberry Pi Pico or another RP2040-based microcontroller.
 
 The DFPlayer is an inexpensive audio player capable of playing Mp3 and WAV files at different sampling rates.
 
@@ -43,5 +43,6 @@ In the example, uart1 is used on GPIOs 8 and 9 on the Pico. Another pair of TX/R
 Two distinct DFPlayers can be used simultaneously using both uart0 and uart1.
 
 ### Version history
+- 2023.09.29 - v1.1.1 - Removed blocking delay while querying
 - 2023.09.03 - v1.1.0 - Added query function
 - 2023.08.29 - v1.0.0 - First release
