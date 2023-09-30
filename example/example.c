@@ -23,8 +23,15 @@ int main() {
 
     // Initialize the player
     dfplayer_init(&dfplayer, DFPLAYER_UART, GPIO_TX, GPIO_RX);
+
     // Sleep 200ms between commands
     sleep_ms(200);
+
+    // The many players on the market come with different chips.
+    // Some of them require a checksum as part of the control message,
+    // some don't. Enable the following line if your specific player
+    // does not respond to all commands:
+    dfplayer_set_checksum_tx(false);
 
     // Set the volume
     dfplayer_set_volume(&dfplayer, 30);

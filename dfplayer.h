@@ -2,7 +2,7 @@
  * RP2040 DFPlayer
  * C library to control a DFPlayer mini (or clone) with Raspberry Pi Pico.
  * By Turi Scandurra – https://turiscandurra.com/circuits
- * v1.1.0 - 2023.09.03
+ * 2023.09.30 - v1.2.0
 */
 
 #ifndef INC_DFPLAYER_H_
@@ -51,6 +51,7 @@ typedef struct {
 } dfplayer_t;
 
 int16_t calculate_checksum(uint8_t *buffer);
+void dfplayer_set_checksum_tx(bool flag);
 void dfplayer_write(dfplayer_t *dfplayer, uint8_t cmd, uint16_t arg);
 bool dfplayer_query(dfplayer_t *dfplayer, uint8_t cmd, uint16_t param);
 uint8_t dfplayer_get_status(dfplayer_t *dfplayer);

@@ -21,6 +21,14 @@ dfplayer_write(&dfplayer, 0x0A, 0);
 ```
 Please refer to the [DFPlayer datasheet](https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299) for more info on the available commands.
 
+
+The many players on the market come with different chips. Some of them require a checksum as part of the control message, some don't.
+Call this function in case your specific player has troubles responding to some commands:
+```c
+dfplayer_set_checksum_tx(false);
+```
+This is required for chips like MH2024K-16SS.
+
 ### Usage
 A typical setup would have the player read Mp3 files off a microSD card (formatted as FAT-32), with the audio files at the root level and named sequentially starting with four digits. So, for example:
 ```
@@ -43,6 +51,7 @@ In the example, uart1 is used on GPIOs 8 and 9 on the Pico. Another pair of TX/R
 Two distinct DFPlayers can be used simultaneously using both uart0 and uart1.
 
 ### Version history
+- 2023.09.30 - v1.2.0 - Added support for more clone variants
 - 2023.09.29 - v1.1.1 - Removed blocking delay while querying
 - 2023.09.03 - v1.1.0 - Added query function
 - 2023.08.29 - v1.0.0 - First release
