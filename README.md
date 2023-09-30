@@ -21,13 +21,11 @@ dfplayer_write(&dfplayer, 0x0A, 0);
 ```
 Please refer to the [DFPlayer datasheet](https://wiki.dfrobot.com/DFPlayer_Mini_SKU_DFR0299) for more info on the available commands.
 
-
-The many players on the market come with different chips. Some of them require a checksum as part of the control message, some don't.
+The many players on the market come with different chips. Some of them (like MH2024K-24K) require a checksum as part of the control message, some (like MH2024K-16SS) require that the checksum is not sent.
 Call this function in case your specific player has troubles responding to some commands:
 ```c
 dfplayer_set_checksum_tx(false);
 ```
-This is required for chips like MH2024K-16SS.
 
 ### Usage
 A typical setup would have the player read Mp3 files off a microSD card (formatted as FAT-32), with the audio files at the root level and named sequentially starting with four digits. So, for example:

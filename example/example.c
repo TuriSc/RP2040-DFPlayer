@@ -31,7 +31,7 @@ int main() {
     // Some of them require a checksum as part of the control message,
     // some don't. Enable the following line if your specific player
     // does not respond to all commands:
-    dfplayer_set_checksum_tx(false);
+    // dfplayer_set_checksum_tx(false);
 
     // Set the volume
     dfplayer_set_volume(&dfplayer, 30);
