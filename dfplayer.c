@@ -27,7 +27,7 @@ uint8_t init_cmd_buf[10] = {
 
 int16_t calculate_checksum(uint8_t *buffer){
     int16_t checksum;
-    checksum = 0 - (buffer[1] + buffer[2] + buffer[3] + buffer[5] + buffer[6]);
+    checksum = 0 - (buffer[1] + buffer[2] + buffer[3] + buffer[4] + buffer[5] + buffer[6]);
     return checksum;
 }
 
@@ -116,7 +116,7 @@ void dfplayer_decrease_volume(dfplayer_t *dfplayer){
 
 void dfplayer_set_volume(dfplayer_t *dfplayer, uint16_t volume) {
     if (volume > 30) {volume = 30;}
-    dfplayer_write(dfplayer, CMD_VOL_DEC, volume);
+    dfplayer_write(dfplayer, CMD_VOL, volume);
 }
 
 void dfplayer_set_eq(dfplayer_t *dfplayer, dfplayer_eq_t eq){
