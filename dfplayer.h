@@ -10,6 +10,10 @@
 
 #include <pico/stdlib.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #define BAUDRATE    9600
 
 // Available commands. The device supports many more,
@@ -68,5 +72,9 @@ void dfplayer_set_eq(dfplayer_t *dfplayer, dfplayer_eq_t eq);
 void dfplayer_set_playback_mode(dfplayer_t *dfplayer, dfplayer_mode_t mode);
 void dfplayer_resume(dfplayer_t *dfplayer);
 void dfplayer_pause(dfplayer_t *dfplayer);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // INC_DFPLAYER_H_
