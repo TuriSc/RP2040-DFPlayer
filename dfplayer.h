@@ -2,7 +2,7 @@
  * RP2040 DFPlayer
  * C library to control a DFPlayer mini (or clone) with Raspberry Pi Pico.
  * By Turi Scandurra – https://turiscandurra.com/circuits
- * 2023.09.30 - v1.2.0
+ * 2023.10.23 - v1.2.1
 */
 
 #ifndef INC_DFPLAYER_H_
@@ -29,6 +29,7 @@ extern "C" {
 #define CMD_RESUME          0x0D
 #define	CMD_PAUSE           0x0E
 #define	QUERY_STATUS        0x42
+#define	QUERY_VOLUME        0x43
 #define	QUERY_SD_TRACK      0x4C
 #define QUERY_NUM_SD_TRACKS 0x47
 
@@ -52,6 +53,7 @@ typedef enum {
 
 typedef struct {
     uart_inst_t *uart;
+    uint8_t max_volume;
 } dfplayer_t;
 
 int16_t calculate_checksum(uint8_t *buffer);
@@ -59,6 +61,7 @@ void dfplayer_set_checksum_tx(bool flag);
 void dfplayer_write(dfplayer_t *dfplayer, uint8_t cmd, uint16_t arg);
 bool dfplayer_query(dfplayer_t *dfplayer, uint8_t cmd, uint16_t param);
 uint8_t dfplayer_get_status(dfplayer_t *dfplayer);
+uint8_t dfplayer_get_volume(dfplayer_t *dfplayer);
 uint16_t dfplayer_get_track_id(dfplayer_t *dfplayer);
 uint16_t dfplayer_get_num_tracks(dfplayer_t *dfplayer);
 void dfplayer_init(dfplayer_t *dfplayer, uart_inst_t *uart, uint8_t gpio_tx, uint8_t gpio_rx);
@@ -68,6 +71,7 @@ void dfplayer_play(dfplayer_t *dfplayer, uint16_t track);
 void dfplayer_increase_volume(dfplayer_t *dfplayer);
 void dfplayer_decrease_volume(dfplayer_t *dfplayer);
 void dfplayer_set_volume(dfplayer_t *dfplayer, uint16_t volume);
+void dfplayer_set_max_volume(dfplayer_t *dfplayer, uint16_t volume);
 void dfplayer_set_eq(dfplayer_t *dfplayer, dfplayer_eq_t eq);
 void dfplayer_set_playback_mode(dfplayer_t *dfplayer, dfplayer_mode_t mode);
 void dfplayer_resume(dfplayer_t *dfplayer);

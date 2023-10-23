@@ -11,8 +11,8 @@
 // Pin definitions.
 // Another pair of TX/RX pins can be used, just
 // be sure to address the relative uart instance
-#define GPIO_TX         8
-#define GPIO_RX         9
+#define GPIO_TX         8       // To RX on the player
+#define GPIO_RX         9       // To TX on the player
 #define DFPLAYER_UART   uart1
 
 // Create an instance of the player
@@ -50,7 +50,7 @@ int main() {
 
     while (true) {
         // Wait 30 seconds
-        sleep_ms(30000);
+        sleep_ms(5000); // TEST 30000
 
         // Skip to next track
         dfplayer_next(&dfplayer);

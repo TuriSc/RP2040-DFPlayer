@@ -2,13 +2,14 @@
  * RP2040 DFPlayer
  * C library to control a DFPlayer mini (or clone) with Raspberry Pi Pico.
  * By Turi Scandurra – https://turiscandurra.com/circuits
- * 2023.09.30 - v1.2.0
+ * 2023.10.23 - v1.2.1
 */
 
 #include "dfplayer.h"
 #include <string.h>
 
 uint8_t dfplayer_status;
+uint8_t dfplayer_volume;
 uint16_t dfplayer_current_track;
 uint16_t dfplayer_num_tracks;
 bool dfplayer_checksum_tx = true;
@@ -68,6 +69,9 @@ bool dfplayer_query(dfplayer_t *dfplayer, uint8_t cmd, uint16_t param){
 		case QUERY_STATUS:
 		    dfplayer_status = buffer[6];
 		break;
+        case QUERY_VOLUME:
+		    dfplayer_volume = buffer[6];
+		break;
 		case QUERY_SD_TRACK:
 		    dfplayer_current_track = (buffer[5] << 8 | buffer[6]);
 		break;
@@ -85,6 +89,12 @@ uint8_t dfplayer_get_status(dfplayer_t *dfplayer){
     return dfplayer_status;
 }
 
+uint8_t dfplayer_get_volume(dfplayer_t *dfplayer){
+    dfplayer_volume = 0;
+    dfplayer_query(dfplayer, QUERY_VOLUME, 0x0000);
+    return dfplayer_volume;
+}
+
 uint16_t dfplayer_get_track_id(dfplayer_t *dfplayer){
     dfplayer_current_track = 0;
     dfplayer_query(dfplayer, QUERY_SD_TRACK, 0x0000);
@@ -99,6 +109,7 @@ uint16_t dfplayer_get_num_tracks(dfplayer_t *dfplayer){
 
 void dfplayer_init(dfplayer_t *dfplayer, uart_inst_t *uart, uint8_t gpio_tx, uint8_t gpio_rx){
     dfplayer->uart = uart;
+    dfplayer->max_volume = 30; // Allowed values are 1 to 30
     uart_init(uart, BAUDRATE);
     gpio_set_function(gpio_tx, GPIO_FUNC_UART);
     gpio_set_function(gpio_rx, GPIO_FUNC_UART);
@@ -124,8 +135,15 @@ void dfplayer_decrease_volume(dfplayer_t *dfplayer){
     dfplayer_write(dfplayer, CMD_VOL_DEC, 0);
 }
 
-void dfplayer_set_volume(dfplayer_t *dfplayer, uint16_t volume) {
+void dfplayer_set_max_volume(dfplayer_t *dfplayer, uint16_t volume) {
     if (volume > 30) {volume = 30;}
+    dfplayer->max_volume = volume;
+    dfplayer_get_volume(dfplayer);
+    if(volume < dfplayer_volume){ dfplayer_set_volume(dfplayer, volume); }
+}
+
+void dfplayer_set_volume(dfplayer_t *dfplayer, uint16_t volume) {
+    if (volume > dfplayer->max_volume) {volume = dfplayer->max_volume;}
     dfplayer_write(dfplayer, CMD_VOL, volume);
 }
 

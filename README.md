@@ -7,12 +7,12 @@ The DFPlayer is an inexpensive audio player capable of playing Mp3 and WAV files
 This library supports the following operations:
 - playback of a specific track
 - skip to next or previous track
-- set volume (range is 1-30)
+- set volume, set a maximum volume (range is 1-30)
 - increase or decrease volume
 - set the equalizer to one of six built-in presets
 - set playback mode to single play, folder repeat, single repeat, or random
 - pause and resume playback
-- query player status, id of current track, and total number of tracks available
+- query player status, id of current track, volume, and total number of tracks available
 - send custom commands
 
 The device supports many more commands than this library implements, most of which can be invoked calling dfplayer_write(). For example, to put the device in standby mode you can use:
@@ -49,6 +49,7 @@ In the example, uart1 is used on GPIOs 8 and 9 on the Pico. Another pair of TX/R
 Two distinct DFPlayers can be used simultaneously using both uart0 and uart1.
 
 ### Version history
+- 2023.10.23 - v1.2.1 - Added max volume setting, querying current volume
 - 2023.09.30 - v1.2.0 - Added support for more clone variants
 - 2023.09.29 - v1.1.1 - Removed blocking delay while querying
 - 2023.09.03 - v1.1.0 - Added query function
