@@ -27,6 +27,7 @@ Call this function in case your specific player has troubles responding to some 
 dfplayer_set_checksum_tx(false);
 ```
 
+
 ### Usage
 A typical setup would have the player read Mp3 files off a microSD card (formatted as FAT-32), with the audio files at the root level and named sequentially starting with four digits. So, for example:
 ```
@@ -38,6 +39,7 @@ A typical setup would have the player read Mp3 files off a microSD card (formatt
 
 An example application is provided.
 
+
 ### Wiring
 In the example, uart1 is used on GPIOs 8 and 9 on the Pico. Another pair of TX/RX pins can be chosen, just be sure to address the correct uart instance when initializing the DFPlayer.
 
@@ -47,6 +49,11 @@ In the example, uart1 is used on GPIOs 8 and 9 on the Pico. Another pair of TX/R
 | pin 12   | GP9 (RX) | pin 3 (TX) |
 
 Two distinct DFPlayers can be used simultaneously using both uart0 and uart1.
+
+
+### Projects using this library
+- [Jukephone](https://github.com/TuriSc/Jukephone)
+
 
 ### Version history
 - 2023.10.23 - v1.2.1 - Added max volume setting, querying current volume
